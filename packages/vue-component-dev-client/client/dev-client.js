@@ -8,6 +8,8 @@ import VueHot2 from './vue2-hot'
 
 if (__meteor_runtime_config__.VUE_NO_HMR) return
 
+const url = require('url')
+
 const tagStyle = 'padding: 2px 4px 1px; background: #326ABC; color: white; border-radius: 3px; font-weight: bold;'
 const infoStyle = 'font-style: italic; color: #326ABC;'
 
@@ -101,6 +103,12 @@ if (Autoupdate._clientVersions) {
 }
 
 Meteor.startup(function () {
+  
+   if(Meteor.isCordova){
+	const root = new URL(__meteor_runtime_config__.ROOT_URL)
+	__meteor_runtime_config__.VUE_DEV_SERVER_URL    = root.protocol+'//'+root.hostname+':'+(parseInt(root.port)+3)+'/';
+  }
+  
   // Dev client
   const devUrl = __meteor_runtime_config__.VUE_DEV_SERVER_URL
 
